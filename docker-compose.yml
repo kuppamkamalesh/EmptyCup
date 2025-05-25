@@ -1,0 +1,37 @@
+# version: "3.8"
+
+# services:
+#   backend:
+#     build: .
+#     ports:
+#       - "5000:5000"
+#     volumes:
+#       - ./instance:/app/instance
+#       - ./static:/app/static # Mount entire static folder
+#     environment:
+#       - FLASK_ENV=development
+#     restart: unless-stopped
+
+#   frontend:
+#     image: nginx:alpine
+#     ports:
+#       - "80:80"
+#     volumes:
+#       - ./static:/usr/share/nginx/html
+#     depends_on:
+#       - backend
+
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000" # Flask will serve both API and frontend on this port
+    volumes:
+      - ./instance:/app/instance # Database persistence
+      - ./static:/app/static # Frontend files
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped
+# No nginx service needed anymore
